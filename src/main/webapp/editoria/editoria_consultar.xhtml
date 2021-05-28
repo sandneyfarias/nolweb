@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:form id="formTabelaEditorias">
+        <p:growl id="message" showDetail="true" />
+        <p:commandButton value="Nova Editoria"
+                         update=":geral"
+                         actionListener="#{editoriaBean.preCadastrar()}"/>
+        <br />
+
+        <p:dataTable value="#{editoriaBean.editorias}" var="editoria"
+                     id="tabelaEditoria" paginator="true" rows="5" width="100%"
+                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                     currentPageReportTemplate="{currentPage} de {totalPages}"
+                     rowsPerPageTemplate="5,10,20" paginatorAlwaysVisible="false"
+                     emptyMessage="Nenhuma EDITORIA foi encontrada">
+            <f:facet name="header">Editorias</f:facet>
+            <p:column>
+                <p:commandButton title="ALTERAR" icon="fa fa-pencil"
+                                 update=":geral" immediate="true"
+                                 action="#{editoriaBean.preAlterar(editoria)}" />
+                <p:commandButton title="REMOVER" icon="fa fa-trash"
+                                 update=":geral :formTabelaEditorias" immediate="true"
+                                 action="#{editoriaBean.remover(editoria)}">
+                    <p:confirm message="Deseja realmente remover a Editoria?"
+                               icon="ui-icon-alert" />
+                </p:commandButton>
+            </p:column>
+            <p:column headerText="Código">
+                <h:outputText value="#{editoria.idEditoria}" />
+            </p:column>
+            <p:column headerText="Nome">
+                <h:outputText value="#{editoria.nome}" />
+            </p:column>
+        </p:dataTable>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+                         style="text-align:center">
+            <p:commandButton value="Sim" type="button"
+                             styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+            <p:commandButton value="Não" type="button"
+                             styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+        </p:confirmDialog>
+    </h:form>
+</ui:composition>

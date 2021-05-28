@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:form id="formCadastrar">
+        <p:panelGrid columns="2">
+            <p:outputLabel for="editoria" value="Editoria" />
+            <p:inputText id="editoria" value="#{editoriaBean.editoria.nome}" />
+        </p:panelGrid>
+        <h:panelGrid columns="1">
+            <p:commandButton id="botaoCadastrar" title="SALVAR"
+                             icon="fa fa-floppy-o" update=":geral"
+                             actionListener="#{editoriaBean.cadastrar()}"
+                             rendered="#{editoriaBean.operacaoCadastrar}" />
+            <p:commandButton id="botaoSalvar" title="ALTERAR"
+                             icon="fa fa-floppy-o" update=":geral"
+                             actionListener="#{editoriaBean.alterar()}"
+                             rendered="#{editoriaBean.operacaoAlterar}" />
+        </h:panelGrid>
+    </h:form>
+</ui:composition>
