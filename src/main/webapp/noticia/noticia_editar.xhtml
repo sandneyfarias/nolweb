@@ -5,5 +5,27 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:form id="formCadastrar">
+        <p:panelGrid columns="2">
+            <p:outputLabel for="titulo" value="Título" />
+            <p:inputText id="titulo" value="#{noticiaBean.noticia.titulo}" size="50" maxlength="100" />
+
+            <p:outputLabel for="editoria" value="Editoria" />
+            <p:selectOneMenu id="editoria" value="#{noticiaBean.noticia.editoria}" converter="#{editoriaConverter}">
+                <f:selectItem value="#{null}" itemLabel="SELECIONE A EDITORIA" noSelectionOption="true" />
+                <f:selectItems value="#{editoriaBean.editorias}" var="editoria" itemValue="#{editoria}" itemLabel="#{editoria.nome}" />
+            </p:selectOneMenu>
+
+        </p:panelGrid>
+
+        <h:panelGrid columns="1">
+            <p:commandButton id="botaoCadastrar" title="SALVAR"
+                             icon="fa fa-floppy-o" update=":geral"
+                             actionListener="#{noticiaBean.cadastrar()}"
+                             rendered="#{noticiaBean.operacaoCadastrar}" />
+            <p:commandButton id="botaoSalvar" title="ALTERAR"
+                             icon="fa fa-floppy-o" update=":geral"
+                             actionListener="#{noticiaBean.alterar()}"
+                             rendered="#{noticiaBean.operacaoAlterar}" />
+        </h:panelGrid>
     </h:form>
 </ui:composition>

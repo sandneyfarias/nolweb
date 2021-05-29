@@ -4,6 +4,44 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:form id="formTabelaJornalistas">
+    <h:form id="formTabelaNoticias">
+        <p:growl id="message" showDetail="true" />
+        <p:commandButton value="Nova Notícia"
+                         update=":geral"
+                         actionListener="#{noticiaBean.preCadastrar()}"/>
+        <br />
+
+        <p:dataTable value="#{noticiaBean.noticias}" var="noticia"
+                     id="tabelaNoticia" paginator="true" rows="5" width="100%"
+                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                     currentPageReportTemplate="{currentPage} de {totalPages}"
+                     rowsPerPageTemplate="5,10,20" paginatorAlwaysVisible="false"
+                     emptyMessage="Nenhuma NOTÍCIA foi encontrada">
+            <f:facet name="header">Notícias</f:facet>
+            <p:column>
+                <p:commandButton title="ALTERAR" icon="fa fa-pencil"
+                                 update=":geral" immediate="true"
+                                 action="#{noticiaBean.preAlterar(noticia)}" />
+                <p:commandButton title="REMOVER" icon="fa fa-trash"
+                                 update=":geral :formTabelaNoticias" immediate="true"
+                                 action="#{noticiaBean.remover(noticia)}">
+                    <p:confirm message="Deseja realmente remover a Editoria?"
+                               icon="ui-icon-alert" />
+                </p:commandButton>
+            </p:column>
+            <p:column headerText="Código">
+                <h:outputText value="#{noticia.idNoticia}" />
+            </p:column>
+            <p:column headerText="Nome">
+                <h:outputText value="#{noticia.titulo}" />
+            </p:column>
+        </p:dataTable>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+                         style="text-align:center">
+            <p:commandButton value="Sim" type="button"
+                             styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+            <p:commandButton value="Não" type="button"
+                             styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+        </p:confirmDialog>
     </h:form>
 </ui:composition>

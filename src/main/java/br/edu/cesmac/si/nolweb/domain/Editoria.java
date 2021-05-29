@@ -3,6 +3,7 @@ package br.edu.cesmac.si.nolweb.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Editoria {
@@ -40,5 +41,18 @@ public class Editoria {
 
 	public void setNoticias(List<Noticia> noticias) {
 		this.noticias = noticias;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Editoria editoria = (Editoria) o;
+		return Objects.equals(nome, editoria.nome);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(nome);
 	}
 }
