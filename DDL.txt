@@ -1,0 +1,62 @@
+CREATE DATABASE nolapi;
+
+-- public.editoria definition
+
+-- Drop table
+
+-- DROP TABLE public.editoria;
+
+CREATE TABLE public.editoria (
+	id_editoria bigserial NOT NULL,
+	nome varchar(255) NULL,
+	CONSTRAINT editoria_pkey PRIMARY KEY (id_editoria)
+);
+
+-- public.jornalista definition
+
+-- Drop table
+
+-- DROP TABLE public.jornalista;
+
+CREATE TABLE public.jornalista (
+	id_jornalista bigserial NOT NULL,
+	biografia varchar(255) NULL,
+	email varchar(255) NULL,
+	nome varchar(255) NULL,
+	CONSTRAINT jornalista_pkey PRIMARY KEY (id_jornalista)
+);
+
+-- public.noticia definition
+
+-- Drop table
+
+-- DROP TABLE public.noticia;
+
+CREATE TABLE public.noticia (
+	id_noticia bigserial NOT NULL,
+	titulo varchar(255) NULL,
+	editoria_id_editoria int8 NULL,
+	CONSTRAINT noticia_pkey PRIMARY KEY (id_noticia)
+);
+
+
+-- public.noticia foreign keys
+
+ALTER TABLE public.noticia ADD CONSTRAINT fk5io1e9krmweqviv8a5q0pi9is FOREIGN KEY (editoria_id_editoria) REFERENCES public.editoria(id_editoria);
+
+-- public.jornalista_noticia definition
+
+-- Drop table
+
+-- DROP TABLE public.jornalista_noticia;
+
+CREATE TABLE public.jornalista_noticia (
+	id_jornalista int8 NOT NULL,
+	id_noticia int8 NOT NULL
+);
+
+
+-- public.jornalista_noticia foreign keys
+
+ALTER TABLE public.jornalista_noticia ADD CONSTRAINT fk4wnn056yk8tcrn1d66oysqv31 FOREIGN KEY (id_jornalista) REFERENCES public.jornalista(id_jornalista);
+ALTER TABLE public.jornalista_noticia ADD CONSTRAINT fkl5tq5ln0bue2w3foi7aopsn0b FOREIGN KEY (id_noticia) REFERENCES public.noticia(id_noticia);
