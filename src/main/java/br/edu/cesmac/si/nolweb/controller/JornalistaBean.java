@@ -1,21 +1,20 @@
 package br.edu.cesmac.si.nolweb.controller;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import br.edu.cesmac.si.nolweb.domain.Jornalista;
+import br.edu.cesmac.si.nolweb.service.JornalistaService;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import br.edu.cesmac.si.nolweb.domain.Jornalista;
-import br.edu.cesmac.si.nolweb.service.JornalistaService;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Named
 @SessionScoped
 public class JornalistaBean implements Serializable {
 
-/*    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     private Jornalista jornalista;
     private List<Jornalista> jornalistas;
 
@@ -51,7 +50,7 @@ public class JornalistaBean implements Serializable {
     }
 
     public void setJornalista(Jornalista jornalista) {
-        this.jornalista = editoria;
+        this.jornalista = jornalista;
     }
 
     public void setJornalistas(List<Jornalista> jornalistas) {
@@ -85,17 +84,18 @@ public class JornalistaBean implements Serializable {
         this.operacaoAlterar = operacaoAlterar;
     }
 
-    *//**
+    /**
      * Demais métodos
-     *//*
+     * */
+
     private void inicializarOperacoes() {
         this.operacaoConsultar = false;
         this.operacaoCadastrar = false;
         this.operacaoAlterar = false;
     }
 
-    public void preAlterar(Jornalista editoria) {
-        this.jornalista = editoria;
+    public void preAlterar(Jornalista jornalista) {
+        this.jornalista = jornalista;
         inicializarOperacoes();
         this.operacaoAlterar = true;
     }
@@ -130,6 +130,6 @@ public class JornalistaBean implements Serializable {
 
     public void limparEntidade() {
         this.jornalista = new Jornalista();
-    }*/
+    }
 
 }

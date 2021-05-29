@@ -1,9 +1,7 @@
 package br.edu.cesmac.si.nolweb.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Jornalista {
@@ -13,20 +11,20 @@ public class Jornalista {
     @Column(name = "id_jornalista")
     private Long idJornalista;
 
-    @NotEmpty(message = "Obrigatório informar o nome!")
+    //@NotEmpty(message = "Obrigatório informar o nome!")
     private String nome;
 
-    @Email(message = "Informe um e-mail válido")
+    //@Email(message = "Informe um e-mail válido")
     private String email;
 
-    @NotEmpty(message = "Obrigatório informar a biografia!")
+    //@NotEmpty(message = "Obrigatório informar a biografia!")
     private String biografia;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+/*    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "jornalista_noticia",
             joinColumns = @JoinColumn(name = "id_jornalista"),
             inverseJoinColumns = @JoinColumn(name = "id_noticia"))
-    private List<Noticia> noticias;
+    private List<Noticia> noticias;*/
 
     public Long getIdJornalista() {
         return idJornalista;
@@ -60,11 +58,24 @@ public class Jornalista {
         this.biografia = biografia;
     }
 
-    public List<Noticia> getNoticias() {
+/*    public List<Noticia> getNoticias() {
         return noticias;
     }
 
     public void setNoticias(List<Noticia> noticias) {
         this.noticias = noticias;
+    }*/
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Jornalista that = (Jornalista) o;
+        return Objects.equals(nome, that.nome) && Objects.equals(email, that.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nome, email);
     }
 }

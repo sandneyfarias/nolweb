@@ -1,7 +1,6 @@
 package br.edu.cesmac.si.nolweb.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,7 +12,7 @@ public class Editoria {
 	@Column(name = "id_editoria")
 	private Long idEditoria;
 
-	@NotEmpty(message = "Obrigatório informar o nome da Editoria!")
+	//@NotEmpty(message = "Obrigatório informar o nome da Editoria!")
 	private String nome;
 
 	@OneToMany(mappedBy = "editoria")

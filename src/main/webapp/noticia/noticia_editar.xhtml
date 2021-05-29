@@ -15,6 +15,17 @@
                 <f:selectItems value="#{editoriaBean.editorias}" var="editoria" itemValue="#{editoria}" itemLabel="#{editoria.nome}" />
             </p:selectOneMenu>
 
+            <p:outputLabel for="jornalista" value="Jornalistas" />
+            <p:selectManyMenu id="jornalista" value="#{noticiaBean.jornalistasSelecionados}"
+                              converter="#{jornalistaConverter}"
+                              var="j" filter="true" filterMatchMode="contains" showCheckbox="true" styleClass="manymenu-advanced">
+                <f:selectItems value="#{jornalistaBean.jornalistas}" var="jornalista" itemLabel="#{jornalista.nome}"
+                               itemValue="#{jornalista}"/>
+                <p:column>
+                    <h:outputText value="#{j.nome}"/>
+                </p:column>
+            </p:selectManyMenu>
+
         </p:panelGrid>
 
         <h:panelGrid columns="1">

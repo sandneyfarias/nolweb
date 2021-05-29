@@ -1,11 +1,13 @@
 package br.edu.cesmac.si.nolweb.controller;
 
+import br.edu.cesmac.si.nolweb.domain.Jornalista;
 import br.edu.cesmac.si.nolweb.domain.Noticia;
 import br.edu.cesmac.si.nolweb.service.NoticiaService;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,7 @@ public class NoticiaBean implements Serializable {
     private static final long serialVersionUID = 1L;
     private Noticia noticia;
     private List<Noticia> noticias;
+    private List<Jornalista> jornalistasSelecionados;
 
     private boolean operacaoConsultar;
     private boolean operacaoCadastrar;
@@ -28,6 +31,7 @@ public class NoticiaBean implements Serializable {
     public NoticiaBean() {
         this.noticia = new Noticia();
         noticias = new ArrayList<>();
+        this.jornalistasSelecionados = new ArrayList<>();
 
         inicializarOperacoes();
         operacaoConsultar = true;
@@ -55,6 +59,14 @@ public class NoticiaBean implements Serializable {
 
     public void setNoticias(List<Noticia> noticias) {
         this.noticias = noticias;
+    }
+
+    public List<Jornalista> getJornalistasSelecionados() {
+        return jornalistasSelecionados;
+    }
+
+    public void setJornalistasSelecionados(List<Jornalista> jornalistasSelecionados) {
+        this.jornalistasSelecionados = jornalistasSelecionados;
     }
 
     public boolean isOperacaoConsultar() {
@@ -94,7 +106,8 @@ public class NoticiaBean implements Serializable {
     }
 
     public void preAlterar(Noticia noticia) {
-        this.noticia = noticia;
+        this.noticia = noticiaService.findById(noticia.getIdNoticia());
+        gerarJornalistasSelecionados(this.noticia.getJornalistas());
         inicializarOperacoes();
         this.operacaoAlterar = true;
     }
@@ -111,7 +124,9 @@ public class NoticiaBean implements Serializable {
         this.operacaoConsultar = true;
     }
 
+    @Transactional
     public void alterar() {
+        this.noticia.setJornalistas(jornalistasSelecionados);
         this.noticiaService.salvar(this.noticia);
         this.limparEntidade();
         inicializarOperacoes();
@@ -120,6 +135,7 @@ public class NoticiaBean implements Serializable {
     }
 
     public void cadastrar() {
+        this.noticia.setJornalistas(jornalistasSelecionados);
         this.noticiaService.salvar(this.noticia);
         this.limparEntidade();
         inicializarOperacoes();
@@ -129,6 +145,22 @@ public class NoticiaBean implements Serializable {
 
     public void limparEntidade() {
         this.noticia = new Noticia();
+        this.jornalistasSelecionados = new ArrayList<>();
+    }
+
+    private void gerarJornalistasSelecionados(List<Jornalista> jornalistas) {
+        List<Jornalista> selecionados = new ArrayList<>();
+
+        for (Jornalista jornalista: jornalistas) {
+            Jornalista j = new Jornalista();
+            j.setIdJornalista(jornalista.getIdJornalista());
+            j.setNome(jornalista.getNome());
+            j.setEmail(jornalista.getEmail());
+
+            selecionados.add(j);
+        }
+
+        this.setJornalistasSelecionados(selecionados);
     }
 
 }
